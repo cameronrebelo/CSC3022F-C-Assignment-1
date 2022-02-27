@@ -1,6 +1,9 @@
 #include "driver.h"
 #include <string>
 #include <iostream>
+#include <vector>
+#include <fstream>
+#include <sstream>
 
 struct TagStruct{
     std::string name;
@@ -14,7 +17,9 @@ int RBLCAM001::main(){
         std::string input; 
         std::cin >> input;
         if(input=="r"){
-            std::cout << "Reading" << std::endl;
+            std::cout << "Enter the name of the file to process" << std::endl;
+            std::string filename;
+            std::cin >> filename;
             //read function
         }
         if(input=="p"){
@@ -38,4 +43,42 @@ int RBLCAM001::main(){
         }
     }
     return 0;
+}
+
+std::vector<TagStruct> read(std::string fileName){
+    std::vector<std::string> lines;
+    std::ifstream in(fileName);
+    std::string tag;
+    std::string pair;
+    std::string data;
+
+    if(!in)
+    {
+        std::cout << "Could not open file" << std::endl;
+    }
+    
+    std::string line;
+    while(std::getline(in, line)){
+        lines.push_back(line);
+    }
+    
+    for (size_t i = 0; i < lines.size(); i++)
+    {
+        std::string processLine = lines[i];
+        for (size_t j = 0; j < processLine.length(); j++)
+        {
+            if (processLine[j]=='<')
+            {
+                int count=0;
+                while(processLine[j+count]!='>'){
+                    count++;
+                }
+                tag = processLine.substr(j,count);
+            }
+            
+        }
+        
+    }
+    
+
 }
