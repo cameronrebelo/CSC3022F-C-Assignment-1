@@ -11,25 +11,26 @@ std::vector<RBLCAM001::TagStruct> RBLCAM001::processTags(std::string fileName){
     std::ifstream in;
     in.open("data/"+fileName);
     std::string tag;
-    int pair;
+    int pair = 1;
     std::string data;
     std::vector<RBLCAM001::TagStruct> tg;
     if(fileName.empty())
     {
         std::cout << "No filename detected" <<std::endl;
-        //return tg;
+        return tg;
     }
     if(!in)
     {
         std::cout << "Could not open file "+fileName << std::endl;
-        //return tg;
+        return tg;
     }
 
     
     std::string line;
     bool dataStop = false;
+    bool exists = false;
     
-    while(std::getline(in,line))// for (size_t i = 0; i < lines.size(); i++)
+    while(std::getline(in,line))
     {
         std::string processLine = line;
         for (size_t j = 0; j < processLine.length(); j++){
@@ -38,31 +39,41 @@ std::vector<RBLCAM001::TagStruct> RBLCAM001::processTags(std::string fileName){
                 while(processLine[j+count]!='>'){
                     count++;
                 }
-                std::cout << count << std::endl;
-
                 if((processLine.substr(j+1,count-1)).find('/') == std::string::npos){
                     tag = processLine.substr(j+1,count-1);
                 }
                 else{
-                    std::cout << "hey buddy" << std::endl;
                     dataStop = true;
-                    //data = processLine.substr();
+                    for (size_t i = 0; i < tg.size(); i++)
+                    {
+                        if(tag==tg[i].name){
+                            exists = true;
+                            pair++;
+                            tg[i].text.append(":"+data);
+                            tg[i].pairs=(tg[i].pairs+1);
+                        }
+                    }
+                    if(dataStop&&!exists){
+                        RBLCAM001::TagStruct tagToAdd ;
+                        tagToAdd.name = tag;
+                        tagToAdd.pairs = pair;
+                        tagToAdd.text = data;
+                        tg.push_back(tagToAdd);
+                        dataStop = false;
+                        data = "";
+                        pair = 1;
+                    }
+                    else if (dataStop&&exists){  
+                        data = "";
+                        pair = 1;
+                        exists = false;
+                        dataStop = false;
+                    }
                 }
-                std::cout << tag << std::endl;
                 j+=count;
-            }
+            } 
             else{
-                if(dataStop){
-                    std::cout << data << std::endl;
-                    RBLCAM001::TagStruct tagToAdd ;
-                    tagToAdd.name = tag;
-                    tagToAdd.pairs = pair;
-                    tagToAdd.text = data;
-                    tg.push_back(tagToAdd);
-                    dataStop = false;
-                }
                 data.append(1, processLine[j]);
-                //std::cout << data << std::endl;
             }
 
         }
@@ -71,7 +82,7 @@ std::vector<RBLCAM001::TagStruct> RBLCAM001::processTags(std::string fileName){
     return tg;
 }
 
-void RBLCAM001::dumpTags(){
+void RBLCAM001::dumpTags(std::vector<RBLCAM001::TagStruct> tagVector){
 
 }
 void RBLCAM001::printTags(std::vector<RBLCAM001::TagStruct> tagVector){
@@ -83,7 +94,7 @@ void RBLCAM001::printTags(std::vector<RBLCAM001::TagStruct> tagVector){
 }
 
 std::string RBLCAM001::listTags(std::string tagName, std::vector<RBLCAM001::TagStruct> tagVector){
-    std::string temp;
+    std::string temp=" ";
     for (size_t i = 0; i < tagVector.size(); i++)
     {
         if(tagVector[i].name == tagName)
