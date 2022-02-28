@@ -5,9 +5,10 @@
 #include <fstream>
 #include <sstream>
 
-
 int main(){
+    std::cout << "test" << std::endl;
     std::cout << "Welcome to the tag processing factory!\nPlease type an option and press return\nr: Read and process tag data\np: Print all tags\nd: Write tags to file\nl: List data for specific tag\nq: Exit the factory" << std::endl;
+    std::vector<RBLCAM001::TagStruct> tagVector;
     while(true){
         std::string input; 
         std::cin >> input;
@@ -15,28 +16,36 @@ int main(){
             std::cout << "Enter the name of the file to process" << std::endl;
             std::string filename;
             std::cin >> filename;
-            RBLCAM001::processTags(filename);
+            tagVector = RBLCAM001::processTags(filename);
             //read function
         }
-        if(input=="p"){
+        else if(input=="p"){
             std::cout << "Printing " + RBLCAM001::printTags() << std::endl;
-            //read function
+            //print function
         }
-        if(input=="d"){
+        else if(input=="d"){
             std::cout << "Dumping" << std::endl;
-            //read function
+            //dump function
         }
-        if(input=="l"){
+        else if(input=="l"){
             std::cout << "Listing" << std::endl;
-            //read function
+            std::string tagName;
+            std::cin >> tagName;
+            std::string foundTag;
+            if(!tagVector.empty())
+            {
+                foundTag = RBLCAM001::listTags(tagName,tagVector);
+            }
+            //output found data
         }
-        if(input=="q"){
+        else if(input=="q"){ //quit function
             std::cout << "Quiting" << std::endl;
             return 0;
         }
         else{
             std::cout << "Looks like you didnt select anything, try again" << std::endl;
         }
+    std::cout << "Please type an option and press return\nr: Read and process tag data\np: Print all tags\nd: Write tags to file\nl: List data for specific tag\nq: Exit the factory" << std::endl;        
     }
-    return 0;
+    //return 0;
 }
