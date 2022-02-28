@@ -13,8 +13,8 @@ namespace RBLCAM001 {
     };
 
     std::vector<TagStruct> processTags(std::string filename);
-    std::string printTags();
-    void dumpTags();
+    void printTags(std::vector<RBLCAM001::TagStruct> tagVector);
+    void dumpTags(std::vector<RBLCAM001::TagStruct> tagVector);
     std::string listTags(std::string tagName, std::vector<RBLCAM001::TagStruct> tagVector);
 }
 

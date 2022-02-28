@@ -20,7 +20,8 @@ int main(){
             //read function
         }
         else if(input=="p"){
-            std::cout << "Printing " + RBLCAM001::printTags() << std::endl;
+            std::cout << "Printing" << std::endl;
+            RBLCAM001::printTags(tagVector);
             //print function
         }
         else if(input=="d"){

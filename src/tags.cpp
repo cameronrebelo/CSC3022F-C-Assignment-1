@@ -74,8 +74,12 @@ std::vector<RBLCAM001::TagStruct> RBLCAM001::processTags(std::string fileName){
 void RBLCAM001::dumpTags(){
 
 }
-std::string RBLCAM001::printTags(){
-    return "Hey you did it";
+void RBLCAM001::printTags(std::vector<RBLCAM001::TagStruct> tagVector){
+    std::string temp;
+    for (size_t i = 0; i < tagVector.size(); i++)
+    {
+        std::cout << (tagVector[i].name + "," + std::to_string(tagVector[i].pairs) + "," + tagVector[i].text) << std::endl;
+    }   
 }
 
 std::string RBLCAM001::listTags(std::string tagName, std::vector<RBLCAM001::TagStruct> tagVector){
