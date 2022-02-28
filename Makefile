@@ -1,13 +1,27 @@
-driver: driver.o
-	g++ driver.o -o driver -std=c++2a
+tagrun: tags.o driver.o
+	g++ tags.o driver.o -o tagrun -std=c++2a
+ 
+tags.o: src/tags.cpp src/tags.h
+	g++ -c src/tags.cpp
 
-driver.o: driver.cpp driver.h
-	g++ -c driver.cpp
 
-run:
-	./driver.o
+driver.o: src/driver.cpp
+	g++ -c src/driver.cpp
+   
+# other rules; invoked by make clean etc 
 
+# deletes all the object code files
 clean:
-	rm bin/*.o
+	@rm -f *.o
+	@rm tagrun
+# driver: driver.o
+# 	g++ driver.o -o driver -std=c++2a
 
-	
+# driver.o: driver.cpp driver.h
+# 	g++ -c driver.cpp
+
+# run:
+# 	./driver.o
+
+# clean:
+# 	rm bin/*.o	

@@ -1,7 +1,8 @@
-#ifndef _DRIVER
-#define _DRIVER
+#ifndef _TAGS
+#define _TAGS
 
 #include <string>
+#include <vector>
 
 namespace RBLCAM001 {
 
@@ -11,7 +12,9 @@ namespace RBLCAM001 {
         std::string text;
     };
 
-    std::vector<TagStruct> processTags(std::string filename){};
+    std::vector<TagStruct> processTags(std::string filename);
+    std::string printTags();
+    void dumpTags();
 }
 
 #endif 
