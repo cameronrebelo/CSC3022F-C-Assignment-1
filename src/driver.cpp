@@ -57,6 +57,7 @@ int main(){
                 std::cin >> tagName;
                 std::string foundTag;
                 foundTag = RBLCAM001::listTags(tagName,tagVector);
+                std::cout << foundTag << std::endl;
             }
             //output found data
         }
@@ -68,7 +69,6 @@ int main(){
             std::cout << "Looks like you didnt select anything, try again" << std::endl;
             system("clear");
         }
-    system("clear");
     std::cout << "Please type an option and press return\nr: Read and process tag data\np: Print all tags\nd: Write tags to file\nl: List data for specific tag\nq: Exit the factory" << std::endl;        
     }
     //return 0;
