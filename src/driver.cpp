@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <cstdlib>
 
 int main(){
     std::cout << "test" << std::endl;
@@ -13,6 +14,7 @@ int main(){
         std::string input; 
         std::cin >> input;
         if(input=="r"){
+            system("clear");
             std::cout << "Enter the name of the file to process" << std::endl;
             std::string filename;
             std::cin >> filename;
@@ -20,21 +22,40 @@ int main(){
             //read function
         }
         else if(input=="p"){
-            std::cout << "Printing" << std::endl;
-            RBLCAM001::printTags(tagVector);
-            //print function
+            system("clear");
+            if(tagVector.empty())
+            {
+                std::cout << "Read in some data first" << std::endl;
+            }
+            else{
+                std::cout << "Printing" << std::endl;
+                RBLCAM001::printTags(tagVector);
+            }
         }
         else if(input=="d"){
-            std::cout << "Dumping" << std::endl;
+            system("clear");
+            if(tagVector.empty())
+            {
+                std::cout << "Read in some data first" << std::endl;
+            }
+            else{
+                std::cout << "Dumping" << std::endl;
+                RBLCAM001::dumpTags(tagVector);
+            }
+            
             //dump function
         }
         else if(input=="l"){
-            std::cout << "Listing" << std::endl;
-            std::string tagName;
-            std::cin >> tagName;
-            std::string foundTag;
-            if(!tagVector.empty())
+            system("clear");
+            if(tagVector.empty())
             {
+                std::cout << "Read in some data first" << std::endl;
+            }
+            else{
+                std::cout << "Enter a tag to search for" << std::endl;
+                std::string tagName;
+                std::cin >> tagName;
+                std::string foundTag;
                 foundTag = RBLCAM001::listTags(tagName,tagVector);
             }
             //output found data
@@ -45,7 +66,9 @@ int main(){
         }
         else{
             std::cout << "Looks like you didnt select anything, try again" << std::endl;
+            system("clear");
         }
+    system("clear");
     std::cout << "Please type an option and press return\nr: Read and process tag data\np: Print all tags\nd: Write tags to file\nl: List data for specific tag\nq: Exit the factory" << std::endl;        
     }
     //return 0;

@@ -8,12 +8,13 @@ tags.o: src/tags.cpp src/tags.h
 driver.o: src/driver.cpp
 	g++ -c src/driver.cpp
    
-# other rules; invoked by make clean etc 
-
+run: tagrun.exe
+	./tagrun.exe
 # deletes all the object code files
 clean:
 	@rm -f *.o
 	@rm tagrun
+	@rm data/tags.txt
 # driver: driver.o
 # 	g++ driver.o -o driver -std=c++2a
 
