@@ -1,28 +1,14 @@
 tagrun: tags.o driver.o
-	g++ tags.o driver.o -o tagrun -std=c++2a
+	g++ bin/tags.o bin/driver.o -o tagrun -std=c++2a
  
 tags.o: src/tags.cpp src/tags.h
-	g++ -c src/tags.cpp
+	g++ -c src/tags.cpp -o bin/tags.o
 
 
 driver.o: src/driver.cpp
-	g++ -c src/driver.cpp
+	g++ -c src/driver.cpp -o bin/driver.o
    
-run: tagrun.exe
-	./tagrun.exe
-# deletes all the object code files
 clean:
-	@rm -f *.o
+	@rm -f bin/*.o
 	@rm tagrun
-	@rm data/tags.txt
-# driver: driver.o
-# 	g++ driver.o -o driver -std=c++2a
-
-# driver.o: driver.cpp driver.h
-# 	g++ -c driver.cpp
-
-# run:
-# 	./driver.o
-
-# clean:
-# 	rm bin/*.o	
+	@rm data/tags.txt	
